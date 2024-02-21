@@ -7,29 +7,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Address {
+public class Brand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long addressId;
+    private Long brandId;
 
-    @ManyToOne
-    @JoinColumn(name="userId", nullable=false)
+    @Column(nullable = false, unique = true)
+    private String brandName;
+
+    @OneToMany(mappedBy = "brand")
     @JsonIgnore
-    private User user;
-
-    private String blockNo;
-    private String description;
-    private String city;
-    private String state;
-    private String country;
-    private String zipcode;
-
-    @Column(nullable = false)
-    private String contactNo;
+    private List<Product> products;
 }

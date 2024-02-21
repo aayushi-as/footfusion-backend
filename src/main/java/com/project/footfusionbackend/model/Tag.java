@@ -1,35 +1,29 @@
 package com.project.footfusionbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Address {
-
+public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long addressId;
+    private Long tagId;
 
-    @ManyToOne
-    @JoinColumn(name="userId", nullable=false)
+    @Column(nullable = false, unique = true)
+    private String tagName;
+
+    @OneToMany(mappedBy = "tag")
     @JsonIgnore
-    private User user;
-
-    private String blockNo;
-    private String description;
-    private String city;
-    private String state;
-    private String country;
-    private String zipcode;
-
-    @Column(nullable = false)
-    private String contactNo;
+    private List<Product> products;
 }

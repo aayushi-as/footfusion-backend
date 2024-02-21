@@ -6,30 +6,25 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Address {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long addressId;
+    private Long reviewId;
 
-    @ManyToOne
-    @JoinColumn(name="userId", nullable=false)
+    private String reviewComments;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "productId", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private User user;
-
-    private String blockNo;
-    private String description;
-    private String city;
-    private String state;
-    private String country;
-    private String zipcode;
-
-    @Column(nullable = false)
-    private String contactNo;
+    private Product product;
 }
