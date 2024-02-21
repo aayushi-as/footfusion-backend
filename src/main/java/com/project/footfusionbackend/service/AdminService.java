@@ -1,0 +1,94 @@
+package com.project.footfusionbackend.service;
+
+import com.project.footfusionbackend.model.*;
+import com.project.footfusionbackend.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class AdminService {
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private BrandRepository brandRepository;
+
+    @Autowired
+    private ColorRepository colorRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private SkuRepository skuRepository;
+
+    public Category addCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    public Category getCategoryById(Long id) {
+        return categoryRepository.findByCategoryId(id);
+    }
+    public List<Category> getAllCategory() {
+        return categoryRepository.findAll();
+    }
+
+    public Brand addBrand(Brand brand) {
+        return brandRepository.save(brand);
+    }
+
+    public Brand getBrandById(Long id) {
+        return brandRepository.findByBrandId(id);
+    }
+    public List<Brand> getAllBrand() {
+        return brandRepository.findAll();
+    }
+
+    public Color addColor(Color color) {
+        return colorRepository.save(color);
+    }
+
+    public Color getColorById(Long id) {
+        return colorRepository.findByColorId(id);
+    }
+    public List<Color> getAllColor() {
+        return colorRepository.findAll();
+    }
+
+    public Tag addTag(Tag tag) {
+        return tagRepository.save(tag);
+    }
+
+    public Tag getTagById(Long id) {
+        return tagRepository.findByTagId(id);
+    }
+    public List<Tag> getAllTag() {
+        return tagRepository.findAll();
+    }
+
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    public Product getProductById(Long id) {
+        return productRepository.findByProductId(id);
+    }
+
+    public Product updateProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    public SKU addSku(SKU sku) {
+        return skuRepository.save(sku);
+    }
+
+    public SKU updateSku(SKU sku) {
+        return skuRepository.save(sku);
+    }
+}
