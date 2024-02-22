@@ -5,6 +5,7 @@ import com.project.footfusionbackend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -84,8 +85,15 @@ public class AdminService {
         return productRepository.save(product);
     }
 
-    public SKU addSku(SKU sku) {
-        return skuRepository.save(sku);
+    public List<SKU> addSku(List<SKU> skuList) {
+
+        List<SKU> savedSkuList = new ArrayList<>();
+        skuList.forEach(sku -> {
+            SKU savedSku = skuRepository.save(sku);
+            savedSkuList.add(savedSku);
+        });
+
+        return savedSkuList;
     }
 
     public SKU updateSku(SKU sku) {

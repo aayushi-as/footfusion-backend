@@ -103,12 +103,12 @@ public class AdminController {
     }
 
     @PostMapping("product/{id}/sku/add")
-    public ResponseEntity<SKU> addProductSku(@RequestBody SKU sku, @PathVariable Long id) {
+    public ResponseEntity<List<SKU>> addProductSku(@RequestBody List<SKU> skuList, @PathVariable Long id) {
         Product product = adminService.getProductById(id);
-        sku.setProduct(product);
+        skuList.forEach(sku -> sku.setProduct(product));
 
-        SKU createdsku = adminService.addSku(sku);
-        return new ResponseEntity<>(createdsku, HttpStatus.CREATED);
+        List<SKU> createdskuList = adminService.addSku(skuList);
+        return new ResponseEntity<>(createdskuList, HttpStatus.CREATED);
     }
 
     @PostMapping("product/{id}/sku/{skuid}/update-stock")
