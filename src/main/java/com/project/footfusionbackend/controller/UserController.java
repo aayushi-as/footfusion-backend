@@ -22,12 +22,6 @@ public class UserController {
     @Autowired
     private AddressService addressService;
 
-    @PostMapping("/account/create")
-    public ResponseEntity<User> createUserAccount(@RequestBody User user) {
-        userService.addUser(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
-
     // Only for development purpose
     @GetMapping("/fetch")
     public ResponseEntity<List<User>> getAllUsers() {

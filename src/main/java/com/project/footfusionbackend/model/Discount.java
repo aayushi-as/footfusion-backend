@@ -14,25 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class User {
-
+public class Discount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long discountId;
 
-    private String password;
+    private String discountPercentage;
 
-    private String fullName;
-
-    @Column(nullable = false, unique = true)
-    private String contactNo;
-
-    @Column(nullable = false, unique = true)
-    private String emailId;
-
-    private String role;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "discount")
     @JsonIgnore
-    private List<Address> address;
+    private List<Product> products;
 }

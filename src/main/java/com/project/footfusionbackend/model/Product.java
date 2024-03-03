@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -25,6 +26,11 @@ public class Product {
     @JoinColumn(name="brandId", nullable=false)
     @JsonIgnore
     private Brand brand;
+
+    @ManyToOne
+    @JoinColumn(name="discountId", nullable=false)
+    @JsonIgnore
+    private Discount discount;
 
     private String name;
 
@@ -49,5 +55,7 @@ public class Product {
     private Integer rating;
 
     private String warranty;
+
+    private LocalDateTime createdAt;
 
 }
