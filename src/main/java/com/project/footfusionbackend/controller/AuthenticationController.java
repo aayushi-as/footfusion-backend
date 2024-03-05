@@ -16,6 +16,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/")
 public class AuthenticationController {
@@ -49,11 +52,19 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest request) throws Exception {
+
+        Optional<User> user = userService.getUserByEmailId(request.getEmailId());
+
+        if (user.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmailId(), request.getPassword()));
         }
         catch (BadCredentialsException e) {
-            throw new Exception("Incorrect Username and password", e);
+//            throw new Exception("Incorrect Username and password", e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password");
         }
         final UserDetails userDetails = myUserDetailsService.loadUserByUsername(request.getEmailId());
 

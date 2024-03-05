@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -26,5 +27,9 @@ public class UserService {
 
     public User getUserById(Long id) {
         return userRepository.findByUserId(id);
+    }
+
+    public Optional<User> getUserByEmailId(String emailId) {
+        return userRepository.findByEmailId(emailId);
     }
 }
