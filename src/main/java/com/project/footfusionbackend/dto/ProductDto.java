@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.project.footfusionbackend.model.Tag;
 
 
 @Getter
@@ -14,10 +15,9 @@ public class ProductDto {
     private String name;
     private String price;
     private String material;
-    private Integer rating;
+    private Double rating;
     private String warranty;
     private Long brandIdDto;
-    private Long colorIdDto;
-    private Long tagIdDto;
+    private Tag tag;
     private Long categoryIdDto;
 }

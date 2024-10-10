@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                             .permitAll();
                     authorize.requestMatchers(
                             "/api/v1/user/**",
-                            "/ping"
+                            "/api/v1/ping"
                     ).authenticated();
                 }).csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -48,4 +48,16 @@ public class SecurityConfiguration {
     public static PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+//        configuration.setAllowedMethods(Arrays.asList("GET"));
+//        configuration.setAllowedHeaders(List.of("Authorization"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
+
 }

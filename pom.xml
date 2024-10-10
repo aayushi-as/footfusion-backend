@@ -12,9 +12,9 @@
 	<artifactId>footfusion-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>footfusion-backend</name>
-	<description>Sping boot backend for footfusion website</description>
+	<description>Spring boot backend for footfusion website</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>23</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -80,7 +80,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>

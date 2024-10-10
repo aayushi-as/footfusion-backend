@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/admin")
 public class AdminController {
@@ -25,7 +24,7 @@ public class AdminController {
         return new ResponseEntity<>(categoryCreated, HttpStatus.CREATED);
     }
 
-    @GetMapping("/category/view-all")
+    @GetMapping("/categories")
     public ResponseEntity<List<Category>> getAllCategory() {
         List<Category> categoryList = adminService.getAllCategory();
         return ResponseEntity.ok(categoryList);
@@ -37,34 +36,10 @@ public class AdminController {
         return new ResponseEntity<>(brandCreated, HttpStatus.CREATED);
     }
 
-    @GetMapping("/brand/view-all")
+    @GetMapping("/brands")
     public ResponseEntity<List<Brand>> getAllBrand() {
         List<Brand> brandList = adminService.getAllBrand();
         return ResponseEntity.ok(brandList);
-    }
-
-    @PostMapping("/color/add")
-    public ResponseEntity<Color> createColor(@RequestBody Color color) {
-        Color colorCreated = adminService.addColor(color);
-        return new ResponseEntity<>(colorCreated, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/color/view-all")
-    public ResponseEntity<List<Color>> getAllColor() {
-        List<Color> colorList = adminService.getAllColor();
-        return ResponseEntity.ok(colorList);
-    }
-
-    @PostMapping("/tag/add")
-    public ResponseEntity<Tag> createTag(@RequestBody Tag tag) {
-        Tag tagCreated = adminService.addTag(tag);
-        return new ResponseEntity<>(tagCreated, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/tag/view-all")
-    public ResponseEntity<List<Tag>> getAllTag() {
-        List<Tag> tagList = adminService.getAllTag();
-        return ResponseEntity.ok(tagList);
     }
 
     @PostMapping("/product/add")
@@ -80,11 +55,7 @@ public class AdminController {
         Brand brand = adminService.getBrandById(productDto.getBrandIdDto());
         product.setBrand(brand);
 
-        Color color = adminService.getColorById(productDto.getColorIdDto());
-        product.setColor(color);
-
-        Tag tag = adminService.getTagById(productDto.getTagIdDto());
-        product.setTag(tag);
+        product.setTag(productDto.getTag());
 
         Category category = adminService.getCategoryById(productDto.getCategoryIdDto());
         product.setCategory(category);

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -27,24 +26,13 @@ public class Product {
     @JsonIgnore
     private Brand brand;
 
-    @ManyToOne
-    @JoinColumn(name="discountId", nullable=false)
-    @JsonIgnore
-    private Discount discount;
-
     private String name;
 
     private String price;
 
-    @ManyToOne
-    @JoinColumn(name="colorId", nullable=false)
-    @JsonIgnore
-    private Color color;
     private String material;
 
-    @ManyToOne
-    @JoinColumn(name = "tagId", nullable = false)
-    @JsonIgnore
+    @Enumerated(EnumType.ORDINAL)
     private Tag tag;
 
     @ManyToOne
@@ -52,7 +40,7 @@ public class Product {
     @JsonIgnore
     private Category category;
 
-    private Integer rating;
+    private Double rating;
 
     private String warranty;
 

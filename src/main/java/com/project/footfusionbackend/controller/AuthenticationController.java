@@ -6,6 +6,8 @@ import com.project.footfusionbackend.security.payload.login.LoginRequest;
 import com.project.footfusionbackend.security.payload.login.LoginResponse;
 import com.project.footfusionbackend.security.service.UserDetailsServiceImpl;
 import com.project.footfusionbackend.service.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/v1/")
 public class AuthenticationController {
@@ -44,14 +46,25 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> createUserAccount(@RequestBody User user) {
+    public ResponseEntity<?> createUserAccount(@RequestBody User user) {
+
+        Optional<User> existingEmail = userService.getUserByEmailId(user.getEmailId());
+        Optional<User> existingContactNo = userService.getUserByContactNo(user.getContactNo());
+
+        if (existingEmail.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
+        }
+        else if (existingContactNo.isPresent()){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Contact already exists");
+        }
+
         user.setPassword(encoder.encode(user.getPassword()));
         userService.addUser(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest request) throws Exception {
+    @PostMapping("/login")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest request, HttpServletResponse response) throws Exception {
 
         Optional<User> user = userService.getUserByEmailId(request.getEmailId());
 
@@ -69,8 +82,16 @@ public class AuthenticationController {
         final UserDetails userDetails = myUserDetailsService.loadUserByUsername(request.getEmailId());
 
         final String jwt = jwtUtil.generateToken(userDetails);
+        Cookie cookie = new Cookie("jwt", jwt);
+        cookie.setHttpOnly(true);                       // Prevent JavaScript access
+        cookie.setMaxAge(24 * 60 * 60);                 // Set cookie expiry (in seconds), adjust as needed
+        cookie.setPath("/");                            // Set cookie path
+//        cookie.setSecure(true);                       // Ensure cookie is transmitted only over HTTPS
+        response.addCookie(cookie);
 
-        return ResponseEntity.ok(new LoginResponse(jwt));
+        System.out.println(cookie);
+
+        return ResponseEntity.ok(new LoginResponse(user.get().getUserId(), user.get().getFullName(), user.get().getEmailId(), user.get().getContactNo()));
     }
 
 }

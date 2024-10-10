@@ -18,12 +18,6 @@ public class AdminService {
     private BrandRepository brandRepository;
 
     @Autowired
-    private ColorRepository colorRepository;
-
-    @Autowired
-    private TagRepository tagRepository;
-
-    @Autowired
     private ProductRepository productRepository;
 
     @Autowired
@@ -49,28 +43,6 @@ public class AdminService {
     }
     public List<Brand> getAllBrand() {
         return brandRepository.findAll();
-    }
-
-    public Color addColor(Color color) {
-        return colorRepository.save(color);
-    }
-
-    public Color getColorById(Long id) {
-        return colorRepository.findByColorId(id);
-    }
-    public List<Color> getAllColor() {
-        return colorRepository.findAll();
-    }
-
-    public Tag addTag(Tag tag) {
-        return tagRepository.save(tag);
-    }
-
-    public Tag getTagById(Long id) {
-        return tagRepository.findByTagId(id);
-    }
-    public List<Tag> getAllTag() {
-        return tagRepository.findAll();
     }
 
     public Product addProduct(Product product) {

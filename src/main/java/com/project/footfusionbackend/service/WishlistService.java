@@ -1,6 +1,5 @@
 package com.project.footfusionbackend.service;
 
-import com.project.footfusionbackend.model.Product;
 import com.project.footfusionbackend.model.Wishlist;
 import com.project.footfusionbackend.repository.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;

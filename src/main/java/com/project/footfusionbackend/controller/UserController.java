@@ -11,8 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
@@ -30,14 +31,21 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/{id}/view")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
         User user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
-    @PutMapping("/{id}/update")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+    @PostMapping("/{id}/update")
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
+
+        Optional<User> existingContactNo = userService.getUserByContactNo(user.getContactNo());
+
+        if (existingContactNo.isPresent() && user.getUserId() != existingContactNo.get().getUserId()){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Contact already exists");
+        }
+
         User newUser = userService.getUserById(id);
         newUser.setContactNo(user.getContactNo());
         newUser.setEmailId(user.getEmailId());
@@ -47,7 +55,7 @@ public class UserController {
         return ResponseEntity.ok(newUser);
     }
 
-    @PostMapping("/{id}/address/create")
+    @PostMapping("/{id}/address/add")
     public ResponseEntity<Address> createAddress(@PathVariable Long id, @RequestBody Address address) {
         User user = userService.getUserById(id);
         address.setUser(user);
@@ -55,13 +63,13 @@ public class UserController {
         addressService.addAddress(address);
         return new ResponseEntity<>(address, HttpStatus.CREATED);
     }
-    @GetMapping("/{id}/address/viewall")
+    @GetMapping("/{id}/address")
     public ResponseEntity<List<Address>> getAllAddress(@PathVariable Long id) {
         List<Address> addresses = addressService.getAllAddressByUserId(id);
         return ResponseEntity.ok(addresses);
     }
 
-    @GetMapping("/{id}/address/{address_id}/view")
+    @GetMapping("/{id}/address/{address_id}")
     public ResponseEntity<Address> getAddressById(@PathVariable Long id, @PathVariable Long address_id) {
         Address address = addressService.getAddressByAddressId(id, address_id);
         return ResponseEntity.ok(address);
