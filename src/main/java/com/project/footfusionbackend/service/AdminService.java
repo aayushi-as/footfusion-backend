@@ -27,30 +27,12 @@ public class AdminService {
         return categoryRepository.save(category);
     }
 
-    public Category getCategoryById(Long id) {
-        return categoryRepository.findByCategoryId(id);
-    }
-    public List<Category> getAllCategory() {
-        return categoryRepository.findAll();
-    }
-
     public Brand addBrand(Brand brand) {
         return brandRepository.save(brand);
     }
 
-    public Brand getBrandById(Long id) {
-        return brandRepository.findByBrandId(id);
-    }
-    public List<Brand> getAllBrand() {
-        return brandRepository.findAll();
-    }
-
     public Product addProduct(Product product) {
         return productRepository.save(product);
-    }
-
-    public Product getProductById(Long id) {
-        return productRepository.findByProductId(id);
     }
 
     public Product updateProduct(Product product) {

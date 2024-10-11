@@ -27,11 +27,13 @@ public class SecurityConfiguration {
 
         http.authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers(
-                            "/api/v1/authenticate",
-                            "/api/v1/signup")
+                            "/api/v1/login",
+                            "/api/v1/signup",
+                            "/api/v1/product/**")
                             .permitAll();
                     authorize.requestMatchers(
                             "/api/v1/user/**",
+                            "/api/v1/admin/**",
                             "/api/v1/ping"
                     ).authenticated();
                 }).csrf(csrf -> csrf.disable())

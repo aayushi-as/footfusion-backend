@@ -42,7 +42,7 @@ public class UserController {
 
         Optional<User> existingContactNo = userService.getUserByContactNo(user.getContactNo());
 
-        if (existingContactNo.isPresent() && user.getUserId() != existingContactNo.get().getUserId()){
+        if (existingContactNo.isPresent() && id != existingContactNo.get().getUserId()){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Contact already exists");
         }
 

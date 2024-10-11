@@ -20,8 +20,6 @@ public class Wishlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long wishlistId;
 
-    private Integer quantity;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "productId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
