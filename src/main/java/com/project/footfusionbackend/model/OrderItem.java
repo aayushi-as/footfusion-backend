@@ -23,6 +23,8 @@ public class OrderItem {
 
     private Integer quantity;
 
+    private Integer size;
+
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

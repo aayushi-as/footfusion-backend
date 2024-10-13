@@ -18,6 +18,7 @@ import com.project.footfusionbackend.model.Cart;
 import com.project.footfusionbackend.model.Product;
 import com.project.footfusionbackend.model.User;
 import com.project.footfusionbackend.service.CartService;
+import com.project.footfusionbackend.service.InventoryService;
 import com.project.footfusionbackend.service.ProductService;
 import com.project.footfusionbackend.service.UserService;
 
@@ -34,9 +35,16 @@ public class CartController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private InventoryService inventoryService;
+    
     @PostMapping("/{userid}/cart/{pid}/add")
-    public ResponseEntity<Cart> addProductToCart(@RequestBody Cart cart, @PathVariable Long userid, @PathVariable Long pid) {
+    public ResponseEntity<?> addProductToCart(@RequestBody Cart cart, @PathVariable Long userid, @PathVariable Long pid) {
         
+        if (!inventoryService.checkIfProductIsInStock(pid, cart.getSize(), cart.getQuantity())) {
+            return ResponseEntity.ok("Product is currently out of stock!!");
+        }
+
         User user = userService.getUserById(userid);
         cart.setUser(user);
 
@@ -75,15 +83,19 @@ public class CartController {
     }
 
 
-    @PostMapping("{userid}/cart/{cid}/{pid}/update-quantity")
-    public ResponseEntity<Cart> updateProductQuantity(@RequestBody Cart cartProduct, @PathVariable Long userid, @PathVariable Long cid, @PathVariable Long pid){
+    @PostMapping("{userid}/cart/{pid}/update-quantity")
+    public ResponseEntity<?> updateProductQuantity(@RequestBody Cart cartProduct, @PathVariable Long userid, @PathVariable Long pid){
+
+        if (!inventoryService.checkIfProductIsInStock(pid, cartProduct.getSize(), cartProduct.getQuantity())) {
+            return ResponseEntity.ok("Product is currently out of stock!!");
+        }
+
         User user = userService.getUserById(userid);
         cartProduct.setUser(user);
 
         Product product = productService.getProductById(pid);
         cartProduct.setProduct(product);
 
-        cartProduct.setCartId(cid);
         cartService.addProductToCart(cartProduct);
 
         return ResponseEntity.ok(cartProduct);

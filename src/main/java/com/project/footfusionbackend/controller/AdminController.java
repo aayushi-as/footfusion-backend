@@ -61,30 +61,30 @@ public class AdminController {
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{id}/update-price")
-    public ResponseEntity<Product> updateProductPrice(@RequestBody ProductPriceDto productPriceDto, @PathVariable Long id) {
-        Product product = productService.getProductById(id);
+    @PostMapping("/{pid}/update-price")
+    public ResponseEntity<Product> updateProductPrice(@RequestBody ProductPriceDto productPriceDto, @PathVariable Long pid) {
+        Product product = productService.getProductById(pid);
         product.setPrice(productPriceDto.getPrice());
 
         Product updatedProduct = adminService.updateProduct(product);
         return ResponseEntity.ok(updatedProduct);
     }
 
-    @PostMapping("/{id}/sku/add")
-    public ResponseEntity<List<SKU>> addProductSku(@RequestBody List<SKU> skuList, @PathVariable Long id) {
-        Product product = productService.getProductById(id);
-        skuList.forEach(sku -> sku.setProduct(product));
+    @PostMapping("/{pid}/inventory/add")
+    public ResponseEntity<List<Inventory>> addProductInventory(@RequestBody List<Inventory> inventoryList, @PathVariable Long pid) {
+        Product product = productService.getProductById(pid);
+        inventoryList.forEach(sku -> sku.setProduct(product));
 
-        List<SKU> createdskuList = adminService.addSku(skuList);
+        List<Inventory> createdskuList = adminService.addInventory(inventoryList);
         return new ResponseEntity<>(createdskuList, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{id}/sku/{skuid}/update-stock")
-    public ResponseEntity<SKU> updateProductSku(@RequestBody SKU sku, @PathVariable Long id, @PathVariable Long skuid) {
-        Product product = productService.getProductById(id);
-        sku.setProduct(product);
-        sku.setSkuId(skuid);
-        SKU createdsku = adminService.updateSku(sku);
+    @PostMapping("/{pid}/inventory/{invid}/update-stock")
+    public ResponseEntity<Inventory> updateProductInventory(@RequestBody Inventory inventory, @PathVariable Long pid, @PathVariable Long invid) {
+        Product product = productService.getProductById(pid);
+        inventory.setProduct(product);
+        inventory.setInventoryId(invid);
+        Inventory createdsku = adminService.updateInventory(inventory);
         return ResponseEntity.ok(createdsku);
     }
 

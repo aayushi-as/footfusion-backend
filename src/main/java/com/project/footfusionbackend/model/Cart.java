@@ -22,6 +22,8 @@ public class Cart {
 
     private Integer quantity;
 
+    private String size;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "productId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

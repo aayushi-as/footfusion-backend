@@ -21,7 +21,7 @@ public class AdminService {
     private ProductRepository productRepository;
 
     @Autowired
-    private SkuRepository skuRepository;
+    private InventoryRepository inventoryRepository;
 
     public Category addCategory(Category category) {
         return categoryRepository.save(category);
@@ -39,18 +39,18 @@ public class AdminService {
         return productRepository.save(product);
     }
 
-    public List<SKU> addSku(List<SKU> skuList) {
+    public List<Inventory> addInventory(List<Inventory> inventories) {
 
-        List<SKU> savedSkuList = new ArrayList<>();
-        skuList.forEach(sku -> {
-            SKU savedSku = skuRepository.save(sku);
+        List<Inventory> savedSkuList = new ArrayList<>();
+        inventories.forEach(sku -> {
+            Inventory savedSku = inventoryRepository.save(sku);
             savedSkuList.add(savedSku);
         });
 
         return savedSkuList;
     }
 
-    public SKU updateSku(SKU sku) {
-        return skuRepository.save(sku);
+    public Inventory updateInventory(Inventory sku) {
+        return inventoryRepository.save(sku);
     }
 }

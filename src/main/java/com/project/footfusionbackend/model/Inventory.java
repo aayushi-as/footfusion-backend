@@ -15,14 +15,14 @@ import org.hibernate.annotations.OnDeleteAction;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class SKU {
+public class Inventory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long skuId;
+    private Long inventoryId;
 
     @Column(nullable = false)
-    private String sku;
+    private String size;
 
     @Column(nullable = false)
     private Long stock;
