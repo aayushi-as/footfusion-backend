@@ -28,27 +28,31 @@ public class WishlistController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping("/{id}/wishlist/{pid}/add")
-    public ResponseEntity<Wishlist> addProductToWishlist(@PathVariable Long id, @PathVariable Long pid) {
+    @PostMapping("/{userid}/wishlist/{pid}/add")
+    public ResponseEntity<WishlistResponseDTO> addProductToWishlist(@PathVariable Long userid, @PathVariable Long pid) {
 
         Wishlist wishlistProduct = new Wishlist();
 
-        User user = userService.getUserById(id);
+        User user = userService.getUserById(userid);
         wishlistProduct.setUser(user);
 
         Product product = productService.getProductById(pid);
         wishlistProduct.setProduct(product);
 
         Wishlist addedProduct = wishlistService.addProductToWishlist(wishlistProduct);
-        return new ResponseEntity<>(addedProduct, HttpStatus.CREATED);
+
+        WishlistResponseDTO wishlistResponseDTO = new WishlistResponseDTO(addedProduct.getWishlistId(), addedProduct.getProduct().getProductId());
+        return new ResponseEntity<>(wishlistResponseDTO, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}/wishlist/{wid}/{pid}/delete")
-    public ResponseEntity<String> removeProductFromWishlist(@PathVariable Long id, @PathVariable Long wid, @PathVariable Long pid) {
+    @DeleteMapping("/{userid}/wishlist/{wid}/{pid}/delete")
+    public ResponseEntity<String> removeProductFromWishlist(@PathVariable Long userid, @PathVariable Long wid, @PathVariable Long pid) {
 
         Wishlist wishlistProduct = new Wishlist();
-        User user = userService.getUserById(id);
-        wishlistProduct.setUser(user);
+        
+        
+        User user = userService.getUserById(userid);
+        wishlistProduct.setUser(user);  
 
         Product product = productService.getProductById(pid);
         wishlistProduct.setProduct(product);

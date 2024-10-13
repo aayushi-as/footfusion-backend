@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import com.project.footfusionbackend.model.Brand;
 import com.project.footfusionbackend.model.Category;
 import com.project.footfusionbackend.model.Product;
+import com.project.footfusionbackend.model.Review;
 import com.project.footfusionbackend.repository.BrandRepository;
 import com.project.footfusionbackend.repository.CategoryRepository;
 import com.project.footfusionbackend.repository.ProductRepository;
+import com.project.footfusionbackend.repository.ReviewRepository;
 
 @Service
 public class ProductService {
@@ -23,6 +25,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
     
     public Category getCategoryById(Long id) {
         return categoryRepository.findByCategoryId(id);
@@ -42,5 +47,9 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         return productRepository.findByProductId(id);
+    }
+
+    public List<Review> getAllReviews(Long pid) {
+        return reviewRepository.findByProductProductId(pid);
     }
 }

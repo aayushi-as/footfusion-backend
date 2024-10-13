@@ -1,6 +1,8 @@
 package com.project.footfusionbackend.service;
 
+import com.project.footfusionbackend.model.Review;
 import com.project.footfusionbackend.model.User;
+import com.project.footfusionbackend.repository.ReviewRepository;
 import com.project.footfusionbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     public void addUser(User user) {
         userRepository.save(user);
@@ -35,5 +40,9 @@ public class UserService {
 
     public Optional<User> getUserByContactNo (String contactNo) {
         return userRepository.findByContactNo(contactNo);
+    }
+
+    public Review addReviewForProduct(Review review) {
+        return reviewRepository.save(review);
     }
 }

@@ -2,8 +2,11 @@ package com.project.footfusionbackend.controller;
 
 
 import com.project.footfusionbackend.model.Address;
+import com.project.footfusionbackend.model.Product;
+import com.project.footfusionbackend.model.Review;
 import com.project.footfusionbackend.model.User;
 import com.project.footfusionbackend.service.AddressService;
+import com.project.footfusionbackend.service.ProductService;
 import com.project.footfusionbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,9 @@ public class UserController {
 
     @Autowired
     private AddressService addressService;
+
+    @Autowired
+    private ProductService productService;
 
     // Only for development purpose
     @GetMapping("/fetch")
@@ -95,6 +101,14 @@ public class UserController {
     public ResponseEntity<String> deleteAddress(@PathVariable Long id, @PathVariable Long address_id) {
         addressService.deleteAddress(id, address_id);
         return ResponseEntity.ok("Deleted Successfully!!");
+    }
+
+    @PostMapping("/{userid}/review/{pid}/add")
+    public ResponseEntity<Review> addReview(@RequestBody Review review, @PathVariable Long userid, @PathVariable Long pid) {
+        Product product = productService.getProductById(pid);
+        review.setProduct(product);
+        Review addedReview = userService.addReviewForProduct(review);
+        return new ResponseEntity<>(addedReview, HttpStatus.OK);
     }
 
 }

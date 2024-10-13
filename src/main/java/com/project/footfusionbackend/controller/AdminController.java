@@ -79,11 +79,10 @@ public class AdminController {
         return new ResponseEntity<>(createdskuList, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{pid}/inventory/{invid}/update-stock")
-    public ResponseEntity<Inventory> updateProductInventory(@RequestBody Inventory inventory, @PathVariable Long pid, @PathVariable Long invid) {
+    @PostMapping("/{pid}/inventory/update-stock")
+    public ResponseEntity<Inventory> updateProductInventory(@RequestBody Inventory inventory, @PathVariable Long pid) {
         Product product = productService.getProductById(pid);
         inventory.setProduct(product);
-        inventory.setInventoryId(invid);
         Inventory createdsku = adminService.updateInventory(inventory);
         return ResponseEntity.ok(createdsku);
     }
