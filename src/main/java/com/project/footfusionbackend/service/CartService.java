@@ -29,4 +29,16 @@ public class CartService {
     public Cart getProductByCartId(Long cartId) {
         return cartRepository.findByCartId(cartId);
     }
+
+    public int getCartTotal(Long userId) {
+
+        int total = 0;
+        List<Cart> productList = getAllProductsFromCart(userId);
+
+        for (Cart cartProduct : productList) {
+            total += cartProduct.getQuantity() * cartProduct.getProduct().getPrice();
+        }
+
+        return total;
+    }
 }

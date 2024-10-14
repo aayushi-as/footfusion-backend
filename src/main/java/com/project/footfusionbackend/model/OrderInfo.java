@@ -22,8 +22,6 @@ public class OrderInfo {
 
     private String orderDate;
     private Integer price;
-    private Integer orderStatus;
-    private String timestamp;
     private String orderBlockNo;
     private String orderDescription;
     private String orderCity;

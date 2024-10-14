@@ -23,7 +23,7 @@ public class OrderItem {
 
     private Integer quantity;
 
-    private Integer size;
+    private String size;
 
     private Integer price;
 

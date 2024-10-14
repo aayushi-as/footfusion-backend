@@ -13,7 +13,7 @@ import com.project.footfusionbackend.model.Tag;
 @AllArgsConstructor
 public class ProductDto {
     private String name;
-    private String price;
+    private Integer price;
     private String material;
     private Double rating;
     private String warranty;

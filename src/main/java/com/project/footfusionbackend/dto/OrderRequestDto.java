@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductPriceDto {
-    private Integer price;
+public class OrderRequestDto {
+    private Long orderAddressId;
+    
 }
