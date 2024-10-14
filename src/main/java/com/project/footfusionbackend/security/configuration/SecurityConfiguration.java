@@ -29,7 +29,18 @@ public class SecurityConfiguration {
                     authorize.requestMatchers(
                             "/api/v1/login",
                             "/api/v1/signup",
-                            "/api/v1/product/**")
+                            "/api/v1/product/**",
+                            "/v2/api-docs",
+                            "/configuration/ui",
+                            "/swagger-resources/**",
+                            "/configuration/security",
+                            "/swagger-ui.html",
+                            "/swagger-ui/*",
+                            "/webjars/**",
+                            "/v2/**",
+                            "/v3/api-docs/**",
+                            "/api-docs/**"
+                            )
                             .permitAll();
                     authorize.requestMatchers(
                             "/api/v1/user/**",
