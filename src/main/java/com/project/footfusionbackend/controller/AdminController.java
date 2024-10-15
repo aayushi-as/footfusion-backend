@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/admin/product")
@@ -47,6 +48,7 @@ public class AdminController {
         product.setMaterial(productDto.getMaterial());
         product.setRating(productDto.getRating());
         product.setWarranty(productDto.getWarranty());
+        product.setCreatedAt(LocalDateTime.now());
 
         Brand brand = productService.getBrandById(productDto.getBrandIdDto());
         product.setBrand(brand);
