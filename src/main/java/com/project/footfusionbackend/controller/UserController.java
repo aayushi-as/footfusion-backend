@@ -8,6 +8,9 @@ import com.project.footfusionbackend.model.User;
 import com.project.footfusionbackend.service.AddressService;
 import com.project.footfusionbackend.service.ProductService;
 import com.project.footfusionbackend.service.UserService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +47,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/update")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<?> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
 
         Optional<User> existingContactNo = userService.getUserByContactNo(user.getContactNo());
 
@@ -62,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/address/add")
-    public ResponseEntity<Address> createAddress(@PathVariable Long id, @RequestBody Address address) {
+    public ResponseEntity<Address> createAddress(@PathVariable Long id, @Valid @RequestBody Address address) {
         User user = userService.getUserById(id);
         address.setUser(user);
 
@@ -82,7 +85,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/address/{address_id}/update")
-    public ResponseEntity<Address> updateAddressById(@PathVariable Long id, @PathVariable Long address_id, @RequestBody Address address) {
+    public ResponseEntity<Address> updateAddressById(@PathVariable Long id, @PathVariable Long address_id, @Valid @RequestBody Address address) {
         Address newAddress = addressService.getAddressByAddressId(id, address_id);
 
         newAddress.setBlockNo(address.getBlockNo());

@@ -8,6 +8,8 @@ import com.project.footfusionbackend.security.service.UserDetailsServiceImpl;
 import com.project.footfusionbackend.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +48,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> createUserAccount(@RequestBody User user) {
+    public ResponseEntity<?> createUserAccount(@Valid @RequestBody User user) {
 
         Optional<User> existingEmail = userService.getUserByEmailId(user.getEmailId());
         Optional<User> existingContactNo = userService.getUserByContactNo(user.getContactNo());
@@ -64,7 +66,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest request, HttpServletResponse response) throws Exception {
+    public ResponseEntity<?> createAuthenticationToken(@Valid @RequestBody LoginRequest request, HttpServletResponse response) throws Exception {
 
         Optional<User> user = userService.getUserByEmailId(request.getEmailId());
 

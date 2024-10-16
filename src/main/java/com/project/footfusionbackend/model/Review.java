@@ -2,6 +2,7 @@ package com.project.footfusionbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
+    @NotBlank(message = "Review comments should not be blank")
     private String reviewComments;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

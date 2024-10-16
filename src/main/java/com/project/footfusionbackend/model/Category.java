@@ -2,6 +2,7 @@ package com.project.footfusionbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class Category {
     private Long categoryId;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "Category should not be blank")
     private String categoryName;
 
     @OneToMany(mappedBy = "category")

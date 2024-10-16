@@ -6,6 +6,8 @@ import com.project.footfusionbackend.model.*;
 import com.project.footfusionbackend.service.AdminService;
 import com.project.footfusionbackend.service.ProductService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class AdminController {
     private ProductService productService;
 
     @PostMapping("/category/add")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
         Category categoryCreated = adminService.addCategory(category);
         return new ResponseEntity<>(categoryCreated, HttpStatus.CREATED);
     }
@@ -33,14 +35,14 @@ public class AdminController {
     
 
     @PostMapping("/brand/add")
-    public ResponseEntity<Brand> createBrand(@RequestBody Brand brand) {
+    public ResponseEntity<Brand> createBrand(@Valid @RequestBody Brand brand) {
         Brand brandCreated = adminService.addBrand(brand);
         return new ResponseEntity<>(brandCreated, HttpStatus.CREATED);
     }
 
 
     @PostMapping("/add")
-    public ResponseEntity<Product> addProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<Product> addProduct(@Valid @RequestBody ProductDto productDto) {
 
         Product product = new Product();
         product.setName(productDto.getName());
@@ -64,7 +66,7 @@ public class AdminController {
     }
 
     @PostMapping("/{pid}/update-price")
-    public ResponseEntity<Product> updateProductPrice(@RequestBody ProductPriceDto productPriceDto, @PathVariable Long pid) {
+    public ResponseEntity<Product> updateProductPrice(@Valid @RequestBody ProductPriceDto productPriceDto, @PathVariable Long pid) {
         Product product = productService.getProductById(pid);
         product.setPrice(productPriceDto.getPrice());
 
@@ -73,7 +75,7 @@ public class AdminController {
     }
 
     @PostMapping("/{pid}/inventory/add")
-    public ResponseEntity<List<Inventory>> addProductInventory(@RequestBody List<Inventory> inventoryList, @PathVariable Long pid) {
+    public ResponseEntity<List<Inventory>> addProductInventory(@Valid @RequestBody List<Inventory> inventoryList, @PathVariable Long pid) {
         Product product = productService.getProductById(pid);
         inventoryList.forEach(sku -> sku.setProduct(product));
 
@@ -82,7 +84,7 @@ public class AdminController {
     }
 
     @PostMapping("/{pid}/inventory/update-stock")
-    public ResponseEntity<Inventory> updateProductInventory(@RequestBody Inventory inventory, @PathVariable Long pid) {
+    public ResponseEntity<Inventory> updateProductInventory(@Valid @RequestBody Inventory inventory, @PathVariable Long pid) {
         Product product = productService.getProductById(pid);
         inventory.setProduct(product);
         Inventory createdsku = adminService.updateInventory(inventory);

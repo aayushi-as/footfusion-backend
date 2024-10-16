@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.footfusionbackend.dto.OrderRequestDto;
 import com.project.footfusionbackend.dto.OrderResponseDTO;
 import com.project.footfusionbackend.service.OrderService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -26,7 +29,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("{userId}/place-order")
-    public ResponseEntity<String> placeOrder(@RequestBody OrderRequestDto orderDetails, @PathVariable Long userId) {
+    public ResponseEntity<String> placeOrder(@Valid @RequestBody OrderRequestDto orderDetails, @PathVariable Long userId) {
         orderService.addOrderDetails(orderDetails.getOrderAddressId(), userId);
         return ResponseEntity.ok("Order placed successfully");
     }

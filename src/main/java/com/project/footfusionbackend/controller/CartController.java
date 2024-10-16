@@ -22,6 +22,8 @@ import com.project.footfusionbackend.service.InventoryService;
 import com.project.footfusionbackend.service.ProductService;
 import com.project.footfusionbackend.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/user")
 public class CartController {
@@ -39,7 +41,7 @@ public class CartController {
     private InventoryService inventoryService;
     
     @PostMapping("/{userid}/cart/{pid}/add")
-    public ResponseEntity<?> addProductToCart(@RequestBody Cart cart, @PathVariable Long userid, @PathVariable Long pid) {
+    public ResponseEntity<?> addProductToCart(@Valid @RequestBody Cart cart, @PathVariable Long userid, @PathVariable Long pid) {
         
         if (!inventoryService.checkIfProductIsInStock(pid, cart.getSize(), cart.getQuantity())) {
             return ResponseEntity.ok("Product is currently out of stock!!");
@@ -56,7 +58,7 @@ public class CartController {
     }
 
     @DeleteMapping("/{userid}/cart/{cid}/{pid}/delete")
-    public ResponseEntity<String> removeProductFromCart(@RequestBody Cart cart, @PathVariable Long userid, @PathVariable Long cid, @PathVariable Long pid) {
+    public ResponseEntity<String> removeProductFromCart(@Valid @RequestBody Cart cart, @PathVariable Long userid, @PathVariable Long cid, @PathVariable Long pid) {
         User user = userService.getUserById(userid);
         cart.setUser(user);
 
@@ -84,7 +86,7 @@ public class CartController {
 
 
     @PostMapping("{userid}/cart/{pid}/update-quantity")
-    public ResponseEntity<?> updateProductQuantity(@RequestBody Cart cartProduct, @PathVariable Long userid, @PathVariable Long pid){
+    public ResponseEntity<?> updateProductQuantity(@Valid @RequestBody Cart cartProduct, @PathVariable Long userid, @PathVariable Long pid){
 
         if (!inventoryService.checkIfProductIsInStock(pid, cartProduct.getSize(), cartProduct.getQuantity())) {
             return ResponseEntity.ok("Product is currently out of stock!!");
