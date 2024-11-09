@@ -24,7 +24,7 @@ Footfusion is a backend application for a footwear e-commerce platform. It provi
 
 ## API Documentation
 The API endpoints are documented with Swagger UI, providing an interactive interface to test and view available endpoints. 
-- **Swagger UI**: [https://aayushi-as.github.io/footfusion-backend/](#)
+- **Swagger UI**: [Click here](https://aayushi-as.github.io/footfusion-backend/) 
 
 ## Technology Stack
 
